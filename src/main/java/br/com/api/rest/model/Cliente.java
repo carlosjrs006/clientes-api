@@ -37,7 +37,7 @@ public class Cliente implements Serializable {
 
 	private String situacao;
 
-	private LocalDate dataCadastro;
+	private String dataCadastro;
 
 	@ElementCollection
 	@CollectionTable(name = "cliente_telefones", joinColumns = @JoinColumn(name = "cod_cliente"))

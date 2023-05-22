@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ClienteRequestDto {
 
+    private Long codCliente;
+
     private String nome;
 
     private String cpfOrCnpj;

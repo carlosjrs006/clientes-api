@@ -4,28 +4,36 @@ import br.com.api.rest.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-	
-//	@Query("select u from Usuario u where u.login = ?1")
-//
-
 
     	@Query("select u from Cliente u where u.cpfOrCnpj = ?1")
         Cliente findClienteByCpf(String cpfOrCnpj);
 
         @Query("select u from Cliente u")
         List<Cliente> getAllClientes();
-	
-	//1 e 2 para referenciar os paramentros
-//	@Transactional
-//	@Modifying
-//	@Query(nativeQuery = true, value = "update usuario set token = ?1 where login = ?2")
-//	Cliente atualizaTokenUser(String token, String login);
+
+        @Query("select u from Cliente u where u.situacao =?1 and u.nome LIKE %?2%")
+        List<Cliente> getAllByFilterClientes(String situacao,String nome);
+
+        @Query("select u from Cliente u where u.situacao =?1")
+        List<Cliente> getAllByFilterSituacaoClientes(String situacao);
+
+        @Query("select u from Cliente u where u.nome LIKE %?1%")
+        List<Cliente> getAllByFilterNomeClientes(String nome);
+
+
+        @Modifying
+        @Query(value = "delete from cliente_telefones where cod_cliente = :id", nativeQuery = true)
+        void deleteAllTelefonesIntoCliente(@Param("id") Long id);
+
 
 }
