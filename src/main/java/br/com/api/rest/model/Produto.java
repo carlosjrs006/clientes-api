@@ -39,6 +39,8 @@ public class Produto implements Serializable {
 
     private String dataCadastro;
 
+    private String dataEditada;
+
     private String nomeImagem;
 
     private String idImagem;

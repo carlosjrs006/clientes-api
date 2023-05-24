@@ -11,10 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProdutoRequestDto {
 
+    private Long codProduto;
 
     private String nomeProduto;
 
     private String custoProduto;
+
+    private String situacao;
 
     private String valorProduto;
 
