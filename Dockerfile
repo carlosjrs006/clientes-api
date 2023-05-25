@@ -11,7 +11,8 @@ ENV KEYCLOAK_PASSWORD=admin
 RUN /opt/jboss/keycloak/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/opt/jboss/keycloak/realm.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
 
 # Exponha a porta do Keycloak
-EXPOSE 8080
+EXPOSE 8082
+
 
 # Inicie o Keycloak
 CMD ["-b", "0.0.0.0"]
