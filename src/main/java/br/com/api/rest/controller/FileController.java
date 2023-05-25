@@ -16,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/storege")
-@CrossOrigin("*")
 public class FileController {
 
     @Autowired

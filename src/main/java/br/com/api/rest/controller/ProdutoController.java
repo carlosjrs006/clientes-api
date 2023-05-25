@@ -3,7 +3,6 @@ package br.com.api.rest.controller;
 import br.com.api.rest.dto.ProdutoRequestDto;
 import br.com.api.rest.model.Produto;
 import br.com.api.rest.service.ProdutoService;
-import br.com.api.rest.service.StorageCloudinaryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/produtos")
-@CrossOrigin("*")
 public class ProdutoController {
 
     @Autowired
