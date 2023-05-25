@@ -1,19 +1,22 @@
-FROM jboss/keycloak:latest
+FROM quay.io/keycloak/keycloak:latest as builder
 
-# Copie os arquivos de configuração personalizados para o container
-COPY realm.json /opt/jboss/keycloak/realm.json
+ENV KC_HEALTH_ENABLED=true
+ENV KC_METRICS_ENABLED=true
+ENV KC_FEATURES=token-exchange
+ENV KC_DB=mysql
+# Install custom providers
+RUN curl -sL https://github.com/aerogear/keycloak-metrics-spi/releases/download/2.5.3/keycloak-metrics-spi-2.5.3.jar -o /opt/keycloak/providers/keycloak-metrics-spi-2.5.3.jar
 
-# Defina as variáveis de ambiente do Keycloak
-ENV KEYCLOAK_USER=admin
-ENV KEYCLOAK_PASSWORD=admin
+RUN /opt/keycloak/bin/kc.sh build
 
-# Importe o arquivo de configuração personalizado no Keycloak
-RUN /opt/jboss/keycloak/bin/standalone.sh -Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/opt/jboss/keycloak/realm.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
-
-# Exponha a porta do Keycloak
-EXPOSE 8082
-
-
-# Inicie o Keycloak
-CMD ["-b", "0.0.0.0"]
-ENTRYPOINT ["/opt/jboss/keycloak/bin/standalone.sh"]
+FROM quay.io/keycloak/keycloak:latest
+COPY --from=builder /opt/keycloak/ /opt/keycloak/
+WORKDIR /opt/keycloak
+# for demonstration purposes only, please make sure to use proper certificates in production instead
+RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
+# change these values to point to a running postgres instance
+ENV KC_DB_URL=jdbc:mysql://root:fHv5SPY3fWPJe2sL8eVw@containers-us-west-7.railway.app:7328/keycloak
+ENV KC_DB_USERNAME=root
+ENV KC_DB_PASSWORD=fHv5SPY3fWPJe2sL8eVw
+ENV KC_HOSTNAME=localhost
+ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start"]

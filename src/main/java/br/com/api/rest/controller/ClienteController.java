@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @PostMapping("")
+    @RolesAllowed("backend-user")
     public ResponseEntity<Cliente> saveCliente(@RequestBody ClienteRequestDto clienteRequestDto){
          try{
              return ResponseEntity.ok().body(clienteService.saveCliente(clienteRequestDto));
@@ -30,6 +32,7 @@ public class ClienteController {
     }
 
     @GetMapping("")
+    @RolesAllowed("backend-user")
     public ResponseEntity<List<Cliente>> getAllClientes(){
         try{
             return ResponseEntity.ok().body(clienteService.getAllClientes());
@@ -40,6 +43,7 @@ public class ClienteController {
     }
 
     @GetMapping("/filtros")
+    @RolesAllowed("backend-user")
     public ResponseEntity<List<Cliente>> getAllByFilterClientes(@RequestParam("situacao") String situacao,
                                                                 @RequestParam("nome") String nome){
         try{
@@ -51,6 +55,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
+    @RolesAllowed("backend-user")
     public ResponseEntity<?> deleteClienteById(@PathVariable("id") Long id){
 
             String deleteSucess = "Cliente deleted sucessfully.";
@@ -66,6 +71,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
+    @RolesAllowed("backend-user")
     public ResponseEntity<Cliente> getClienteById(@PathVariable("id") Long id){
 
         Optional<Cliente> clienteModelOptional = clienteService.findById(id);
@@ -76,6 +82,7 @@ public class ClienteController {
     }
 
     @PutMapping("/editar-cliente")
+    @RolesAllowed("backend-user")
     public ResponseEntity<Cliente> updateClienteById(@RequestBody ClienteRequestDto clienteRequestDto){
 
         Optional<Cliente> clienteModelOptional = clienteService.findById(clienteRequestDto.getCodCliente());
