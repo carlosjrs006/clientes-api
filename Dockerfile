@@ -1,19 +1,11 @@
-FROM jboss/keycloak:15.0.2
+FROM quay.io/keycloak/keycloak:latest as builder
 
-USER root
-
-# Instalar o curl
-RUN apt-get update && apt-get install -y curl
-
-USER jboss
-
-# Restante das instruções do Dockerfile
+ENV KC_HEALTH_ENABLED=true
+ENV KC_METRICS_ENABLED=true
+ENV KC_FEATURES=token-exchange
 ENV KC_DB=mysql
-
-# ...
+# Install custom providers
 RUN curl -sL https://github.com/aerogear/keycloak-metrics-spi/releases/download/2.5.3/keycloak-metrics-spi-2.5.3.jar -o /opt/keycloak/providers/keycloak-metrics-spi-2.5.3.jar
-
-# ...
 
 RUN /opt/keycloak/bin/kc.sh build
 
@@ -26,5 +18,5 @@ RUN keytool -genkeypair -storepass password -storetype PKCS12 -keyalg RSA -keysi
 ENV KC_DB_URL=jdbc:mysql://root:fHv5SPY3fWPJe2sL8eVw@containers-us-west-7.railway.app:7328/keycloak
 ENV KC_DB_USERNAME=root
 ENV KC_DB_PASSWORD=fHv5SPY3fWPJe2sL8eVw
-ENV KC_HOSTNAME=localhost
+ENV KC_HOSTNAME=containers-us-west-7.railway.app
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh", "start"]
