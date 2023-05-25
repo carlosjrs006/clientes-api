@@ -16,6 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/produtos")
+@CrossOrigin("https://sunny-starburst-bf91e2.netlify.app/")
 public class ProdutoController {
 
     @Autowired
