@@ -6,15 +6,15 @@ ENV KC_FEATURES=token-exchange
 ENV KC_DB=mysql
 
 # Install custom providers
-RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/*
-
-RUN wget -q https://github.com/aerogear/keycloak-metrics-spi/releases/download/2.5.3/keycloak-metrics-spi-2.5.3.jar -O /opt/keycloak/providers/keycloak-metrics-spi-2.5.3.jar
+RUN powershell -Command "Invoke-WebRequest -Uri 'https://github.com/aerogear/keycloak-metrics-spi/releases/download/2.5.3/keycloak-metrics-spi-2.5.3.jar' -OutFile '/opt/keycloak/providers/keycloak-metrics-spi-2.5.3.jar'"
 
 RUN /opt/keycloak/bin/kc.sh build
 
 FROM quay.io/keycloak/keycloak:latest
 COPY --from=builder /opt/keycloak/ /opt/keycloak/
 WORKDIR /opt/keycloak
+
+# Restante do seu Dockerfile.
 
 # Restante do seu Dockerfile...
 # for demonstration purposes only, please make sure to use proper certificates in production instead
