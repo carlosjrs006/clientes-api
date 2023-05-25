@@ -2,7 +2,6 @@ package br.com.api.rest.controller;
 
 import br.com.api.rest.execptions.MensagemException;
 import br.com.api.rest.service.StorageCloudinaryService;
-import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/storege")
-@CrossOrigin("*")
 public class FileController {
 
     @Autowired

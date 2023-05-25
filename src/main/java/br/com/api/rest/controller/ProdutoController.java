@@ -9,14 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/produtos")
-@CrossOrigin("*")
 public class ProdutoController {
 
     @Autowired
@@ -24,7 +22,6 @@ public class ProdutoController {
 
 
     @PostMapping("")
-    @RolesAllowed("backend-user")
     public ResponseEntity<Produto> saveCliente(@RequestBody ProdutoRequestDto produtoRequestDto){
         try{
             return ResponseEntity.ok().body(produtoService.saveProduto(produtoRequestDto));
@@ -35,7 +32,6 @@ public class ProdutoController {
     }
 
     @GetMapping("")
-    @RolesAllowed("backend-user")
     public ResponseEntity<List<Produto>> getAllProdutos(){
         try{
             return ResponseEntity.ok().body(produtoService.getAllProdutos());
@@ -45,7 +41,6 @@ public class ProdutoController {
     }
 
     @GetMapping("/filtros")
-    @RolesAllowed("backend-user")
     public ResponseEntity<List<Produto>> getAllByFilterClientes(@RequestParam("situacao") String situacao,
                                                                 @RequestParam("nomeProduto") String nomeProduto){
         try{
@@ -57,7 +52,6 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/{id}")
-    @RolesAllowed("backend-user")
     public ResponseEntity<?> deleteProdutoById(@PathVariable("id") Long id) throws IOException {
 
         String deleteSucess = "Cliente deleted sucessfully.";
@@ -73,7 +67,6 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    @RolesAllowed("backend-user")
     public ResponseEntity<Produto> getProdutoById(@PathVariable("id") Long id){
 
         Optional<Produto> produtoModelOptional = produtoService.findById(id);
@@ -85,7 +78,6 @@ public class ProdutoController {
     }
 
     @PutMapping("/editar-produto")
-    @RolesAllowed("backend-user")
     public ResponseEntity<Produto> updateProdutoById(@RequestBody ProdutoRequestDto produtoRequestDto){
 
         Optional<Produto> produtoModelOptional = produtoService.findById(produtoRequestDto.getCodProduto());
