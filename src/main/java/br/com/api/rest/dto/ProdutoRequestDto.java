@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -15,11 +17,11 @@ public class ProdutoRequestDto {
 
     private String nomeProduto;
 
-    private String custoProduto;
+    private BigDecimal custoProduto;
 
     private String situacao;
 
-    private String valorProduto;
+    private BigDecimal valorProduto;
 
     private Integer quantidade;
 

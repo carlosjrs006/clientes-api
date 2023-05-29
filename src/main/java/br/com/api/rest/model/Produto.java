@@ -1,15 +1,14 @@
 package br.com.api.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 @Data
@@ -29,9 +28,9 @@ public class Produto implements Serializable {
 
     private String nomeProduto;
 
-    private String custoProduto;
+    private BigDecimal custoProduto;
 
-    private String valorProduto;
+    private BigDecimal valorProduto;
 
     private Integer quantidade;
 
@@ -46,5 +45,10 @@ public class Produto implements Serializable {
     private String idImagem;
 
     private String urlImagem;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "venda_id")
+    private Venda venda;
 
 }
