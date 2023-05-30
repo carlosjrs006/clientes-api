@@ -46,9 +46,5 @@ public class Produto implements Serializable {
 
     private String urlImagem;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "venda_id")
-    private Venda venda;
 
 }
