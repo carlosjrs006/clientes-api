@@ -12,6 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:4200")
                 .allowedOrigins("https://sunny-starburst-bf91e2.netlify.app")
+                .allowedOrigins("https://www.hookah.net.br/")
                 .allowedOriginPatterns("http://localhost:4200")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowedHeaders("*")

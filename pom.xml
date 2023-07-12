@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.carlos</groupId>
 	<artifactId>pdv-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>pdv-api</name>
 	<description>sistema de caixa</description>
 	<properties>
